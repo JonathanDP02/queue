@@ -64,42 +64,54 @@ public class antrianLayanan07 {
         }
     }
 
-    public void enqueue(int dt){
-        if (isFull()){
-            System.out.println("Queue sudah penuh");
-        }else{
-            if (isEmpty()){
-                front = rear = 0;
-            }else{
-                if (rear == max - 1){
-                    rear = 0;
-                }else{
-                    rear++;
-                }
-            }
-        data[rear] = dt;
-        size++;
-    }
-}
-
-    public int dequeue(){
-        int dt=0;
-        if (isEmpty()){
-            System.out.println("Queue masih kosong");
-        }else{
-            dt = data[front];
-            size--;
-            if (isEmpty()){
-                front = rear = -1;
-            }else{
-                if (front == max - 1){
-                    front = 0;
-                }else{
-                    front++;
-                }
-            }
+    public void tambahAntrian(Mahasiswa07 mhs){
+        if(isFull()){
+            System.out.println("Antrian penuh, tidak dapat menabah mahasiswa.");
+            return;
         }
-        return dt;
+        rear = (rear + 1) % max;
+        data[rear]=mhs;
+        size++;
+        System.out.println(mhs.nama+" berhasil masuk ke antrian");
+    }
+
+    public Mahasiswa07 layaniMahasiswa(){
+        if(isEmpty()) {
+            System.out.println("Antrian kosong.");
+            return null;
+        }
+        Mahasiswa07 mhs = data[front];
+        front =(front + 1) % max;
+        size--;
+        return mhs;
+    }
+
+    public void lihatTerdepan(){
+        if(isEmpty()){
+            System.out.println("Antria kosong.");
+        }else{
+            System.out.print("Mahasiswa terdepan: ");
+            System.out.println("NIM - NAMA - PRODI - KELAS");
+            data[front].tampikanData();
+        }
+    }
+
+    public void tampilkanSemua(){
+        if (isEmpty()) {
+            System.out.println("Antrian kosong.");
+            return;
+        }
+        System.out.println("Daftar Mahasiswa dalam Antrian: ");
+        System.out.println("NIM - NAMA - PRODI - KELAS");
+        for(int i =0; i < size; i++){
+            int index = (front + i ) % max;
+            System.out.print((i+1) + ". ");
+            data[index].tampikanData();
+        }
+    }
+
+    public int getJumlahAntrian(){
+        return size;
     }
 
 
