@@ -8,8 +8,8 @@ public class queue07 {
     public queue07(int max) {
         this.max = max;
         data = new int[max];
-        front = 0;
-        size = rear = -1;
+        size = 0;
+        front = rear = -1;
     }
 
     public boolean isEmpty() {
@@ -61,42 +61,38 @@ public class queue07 {
     }
 
     public void enqueue(int dt){
-        if (isFull()){
-            System.out.println("Queue sudah penuh");
-        }else{
-            if (isEmpty()){
-                front = rear = 0;
-            }else{
-                if (rear == max - 1){
-                    rear = 0;
-                }else{
-                    rear++;
-                }
-            }
+    if (isFull()){
+        System.out.println("Queue sudah penuh! Program dihentikan.");
+        System.exit(0);
+    } else {
+        if (isEmpty()){
+            front = rear = 0;
+        } else {
+            rear = (rear + 1) % max;
+        }
         data[rear] = dt;
         size++;
     }
 }
 
+
     public int dequeue(){
-        int dt=0;
-        if (isEmpty()){
-            System.out.println("Queue masih kosong");
-        }else{
-            dt = data[front];
-            size--;
-            if (isEmpty()){
-                front = rear = -1;
-            }else{
-                if (front == max - 1){
-                    front = 0;
-                }else{
-                    front++;
-                }
-            }
-        }
-        return dt;
+    if (isEmpty()){
+        System.out.println("Queue masih kosong! Program dihentikan.");
+        System.exit(0);
     }
+
+    int dt = data[front];
+    size--;
+
+    if (isEmpty()){
+        front = rear = -1;
+    } else {
+        front = (front + 1) % max;
+    }
+
+    return dt;
+}
 
 
 }
